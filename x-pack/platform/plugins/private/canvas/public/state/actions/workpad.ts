@@ -82,6 +82,9 @@ export const setWorkpad = createThunk(
 export const refreshWorkpad = createThunk('refreshWorkpad', async ({ dispatch, getState }) => {
   const currentWorkpad = getWorkpad(getState());
 
+  // TODO: This fetches the full workpad (including potentially large assets)
+  // just to compare @timestamp. A lightweight metadata-only endpoint (returning
+  // only @timestamp/version) would reduce recurring network and server load.
   let latestWorkpad: CanvasWorkpad;
   try {
     latestWorkpad = await getCanvasWorkpadService().get(currentWorkpad.id);
